@@ -1,0 +1,70 @@
+.form {
+  display: grid;
+  grid-template-columns: 1fr 160px auto;
+  gap: 12px;
+  align-items: end;
+  margin: 14px 0 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 12px;
+  color: #555;
+}
+
+.input {
+  padding: 8px 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #b7b7b7;
+}
+
+.error {
+  font-size: 12px;
+  color: #b00020;
+}
+
+.add-btn {
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: none;
+  background: #1976d2;
+  color: white;
+  cursor: pointer;
+  height: 38px;
+}
+
+.wallets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.wallet {
+  padding: 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.balance {
+  margin-top: 6px;
+  color: #555;
+}
+
+.api-error {
+  color: #b00020;
+  margin: 10px 0;
+}

@@ -1,0 +1,49 @@
+<h1>Кошельки</h1>
+
+<form class="form" [formGroup]="form" (ngSubmit)="add()">
+  <div class="field">
+    <label class="label" for="name">Название</label>
+    <input id="name" class="input" type="text" formControlName="name" placeholder="Например: Карта" />
+    @if (form.controls.name.touched && form.controls.name.invalid) {
+      <div class="error">Введите название (минимум 2 символа)</div>
+    }
+  </div>
+
+  <div class="field">
+    <label class="label" for="currency">Баланс</label>
+    <input id="balance" class="input" type="number" formControlName="balance" placeholder="0" />
+    @if (form.controls.balance.touched && form.controls.balance.invalid) {
+      <div class="error">Введите баланс больше 0</div>
+    }
+  </div>
+
+  <div class="field">
+    <label class="label" for="currency">Валюта</label>
+    <select id="currency" class="input" formControlName="currency">
+      <option value="RUB">RUB</option>
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+    </select>
+  </div>
+
+  <button class="add-btn" type="submit">+ Добавить</button>
+</form>
+
+@if (state() === 'loading') {
+  <p>Загрузка...</p>
+}
+
+@if (error()) {
+  <p class="api-error">{{ error() }}</p>
+}
+
+@if (state() === 'ready') {
+  <div class="wallets">
+    @for (wallet of wallets(); track wallet.id) {
+      <div class="wallet">
+        <div class="name">{{ wallet.name }}</div>
+        <div class="balance">{{ wallet.balance }} {{ wallet.currency }}</div>
+      </div>
+    }
+  </div>
+}
