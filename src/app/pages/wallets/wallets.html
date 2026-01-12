@@ -38,12 +38,38 @@
 }
 
 @if (state() === 'ready') {
-  <div class="wallets">
-    @for (wallet of wallets(); track wallet.id) {
-      <div class="wallet">
-        <div class="name">{{ wallet.name }}</div>
-        <div class="balance">{{ wallet.balance }} {{ wallet.currency }}</div>
-      </div>
-    }
+  <div class="section">
+    <h2>Активные</h2>
+    <div class="wallets">
+      @for (wallet of activeWallets(); track wallet.id) {
+        <div class="wallet">
+          <div class="name">{{ wallet.name }}</div>
+          <div class="balance">{{ wallet.balance }} {{ wallet.currency }}</div>
+          <div class="actions">
+            <button class="archive-btn" type="button" (click)="archive(wallet.id)">
+              Архивировать
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Архив</h2>
+    <div class="wallets">
+      @for (wallet of archivedWallets(); track wallet.id) {
+        <div class="wallet">
+          <div class="name">{{ wallet.name }}</div>
+          <div class="balance">{{ wallet.balance }} {{ wallet.currency }}</div>
+          <div class="actions">
+            <button class="archive-btn" type="button" (click)="archive(wallet.id)">
+              Вернуть
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+
   </div>
 }

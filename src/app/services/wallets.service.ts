@@ -1,6 +1,6 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { Wallet } from '../models/wallet.model';
-import { WalletsApi } from '../api/wallets.api';
+import { CreateWalletRequest, WalletsApi } from '../api/wallets.api';
 import { firstValueFrom } from 'rxjs';
 
 type LoadState = 'idle' | 'loading' | 'ready' | 'error';
@@ -31,7 +31,7 @@ export class WalletsService {
     }
   }
 
-  async add(wallet: Omit<Wallet, 'id'>): Promise<void> {
+  async add(wallet: CreateWalletRequest): Promise<void> {
     try {
       const created = await firstValueFrom(this.api.create(wallet));
       this._wallets.update(list => [created, ...list]);

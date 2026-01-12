@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Wallet } from '../models/wallet.model';
 
-export type CreateWalletRequest = Omit<Wallet, 'id'>;
+export type CreateWalletRequest = Omit<Wallet, 'id' | 'archived'>;
 
 @Injectable({ providedIn: 'root' })
 export class WalletsApi {
@@ -21,6 +21,6 @@ export class WalletsApi {
   }
 
   archive(id: number): Observable<Wallet> {
-    return this.http.patch<Wallet>(`${this.baseUrl}/${id}/archive`, {});
+    return this.http.patch<Wallet>(`${this.baseUrl}/${id}/archived`, {});
   }
 }

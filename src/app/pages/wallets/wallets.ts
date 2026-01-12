@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, computed, inject, OnInit} from '@angular/core';
 import {ReactiveFormsModule, FormControl, FormGroup, Validators} from '@angular/forms';
 import {WalletsService} from '../../services/wallets.service';
 
@@ -21,6 +21,8 @@ export class Wallets implements OnInit {
   readonly wallets = this.walletsService.wallets;
   readonly state = this.walletsService.state;
   readonly error = this.walletsService.error;
+  readonly activeWallets = computed(() => this.wallets().filter(wallet => !wallet.archived));
+  readonly archivedWallets = computed(() => this.wallets().filter(wallet => wallet.archived));
 
   readonly form: WalletForm = new FormGroup({
     name: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(2)]}),
@@ -43,5 +45,9 @@ export class Wallets implements OnInit {
     await this.walletsService.add({name: name.trim(), balance, currency});
 
     this.form.reset({name: '', currency: 'RUB'});
+  }
+
+  async archive(walletId: number): Promise<void> {
+    await this.walletsService.archive(walletId);
   }
 }
