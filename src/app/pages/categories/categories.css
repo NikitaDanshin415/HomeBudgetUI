@@ -1,4 +1,112 @@
 .page-grid {
   display: grid;
-  gap: 8px;
+  gap: 16px;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(160px, 1fr)) auto;
+  gap: 12px;
+  align-items: start;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 12px;
+  color: #555;
+}
+
+.input {
+  padding: 8px 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: #b7b7b7;
+}
+
+.error {
+  font-size: 12px;
+  color: #b00020;
+}
+
+.add-btn {
+  grid-column: 1 / -1;
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: none;
+  background: #1976d2;
+  color: white;
+  cursor: pointer;
+  height: 38px;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.category {
+  padding: 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  background-color: #c0e90c;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.archived {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #777;
+}
+
+
+.archived-background {
+  background-color: #fdf0c9;
+}
+
+.api-error {
+  color: #b00020;
+  margin: 10px 0;
+}
+
+.actions {
+  display: grid;
+  margin-top: 12px;
+}
+
+.archive-btn {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #d5d5d5;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+.section {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.section:first-of-type {
+  margin-top: 0;
+}
+
+.section h2 {
+  margin: 0 0 12px;
+  font-size: 16px;
 }

@@ -1,4 +1,72 @@
 <section class="page-grid">
   <h1>Категории</h1>
-  <p>Здесь будут категории доходов и расходов.</p>
+  <form class="form" [formGroup]="form" (ngSubmit)="add()">
+    <div class="field">
+      <label class="label" for="name">Название</label>
+      <input id="name" class="input" type="text" formControlName="name" placeholder="Например: Продукты"/>
+      <div class="error-slot">
+        @if (form.controls.name.touched && form.controls.name.invalid) {
+          <div class="error">Введите название (минимум 2 символа)</div>
+        }
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label" for="type">Тип</label>
+      <select id="type" class="input" formControlName="type">
+        <option value="spend">Расходы</option>
+        <option value="income">Доходы</option>
+      </select>
+    </div>
+
+    <button class="add-btn" type="submit">+ Добавить</button>
+  </form>
+
+  @if (state() === 'loading') {
+    <p>Загрузка...</p>
+  }
+
+  @if (error()) {
+    <p class="api-error">{{ error() }}</p>
+  }
+
+  @if (state() !== 'loading') {
+    <div class="section">
+      <h2>Доходы</h2>
+      <div class="categories">
+        @for (category of incomeCategories(); track category.id) {
+          <div class="category" [class.archived-background]="category.archived">
+            <div class="name">{{ category.name }}</div>
+            @if (category.archived) {
+              <div class="archived">В архиве</div>
+            }
+            <div class="actions">
+              <button class="archive-btn" type="button" (click)="archive(category.id, 'income')">
+                {{ category.archived ? 'Вернуть' : 'Архивировать' }}
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Расходы</h2>
+      <div class="categories">
+        @for (category of spendCategories(); track category.id) {
+          <div class="category" [class.archived-background]="category.archived">
+            <div class="name">{{ category.name }}</div>
+            @if (category.archived) {
+              <div class="archived">В архиве</div>
+            }
+            <div class="actions">
+              <button class="archive-btn" type="button" (click)="archive(category.id, 'spend')">
+                {{ category.archived ? 'Вернуть' : 'Архивировать' }}
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
 </section>

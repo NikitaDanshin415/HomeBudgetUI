@@ -70,7 +70,7 @@
       <h2>Архив</h2>
       <div class="wallets">
         @for (wallet of archivedWallets(); track wallet.id) {
-          <div class="wallet">
+          <div class="wallet archived">
             <div class="name">{{ wallet.name }}</div>
             <div class="balance">{{ wallet.balance }} {{ wallet.currency }}</div>
             <div class="actions">
