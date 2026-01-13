@@ -1,9 +1,8 @@
 .form {
   display: grid;
-  grid-template-columns: 1fr 160px auto;
+  grid-template-columns: repeat(3, minmax(160px, 1fr)) auto;
   gap: 12px;
-  align-items: end;
-  margin: 14px 0 18px;
+  align-items: start;
 }
 
 .field {
@@ -22,6 +21,8 @@
   border: 1px solid #e5e5e5;
   border-radius: 10px;
   outline: none;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .input:focus {
@@ -34,6 +35,7 @@
 }
 
 .add-btn {
+  grid-column: 1 / -1; /* 👈 занять всю ширину */
   padding: 9px 14px;
   border-radius: 10px;
   border: none;
@@ -70,6 +72,7 @@
 }
 
 .actions {
+  display: grid;
   margin-top: 12px;
 }
 
@@ -87,6 +90,8 @@
 }
 
 .section {
+  display: grid;
+  gap: 12px;
   margin-top: 20px;
 }
 
@@ -97,4 +102,13 @@
 .section h2 {
   margin: 0 0 12px;
   font-size: 16px;
+}
+
+.error-block {
+  margin: 10px 0 16px;
+}
+
+.page-grid {
+  display: grid;
+  gap: 16px;
 }

@@ -2,6 +2,7 @@ import { Injectable, computed, signal } from '@angular/core';
 import { Wallet } from '../models/wallet.model';
 import { CreateWalletRequest, WalletsApi } from '../api/wallets.api';
 import { firstValueFrom } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 type LoadState = 'idle' | 'loading' | 'ready' | 'error';
 
@@ -27,7 +28,7 @@ export class WalletsService {
       this._state.set('ready');
     } catch (e) {
       this._state.set('error');
-      this._error.set('Не удалось загрузить кошельки');
+      this._error.set(this.getErrorMessage(e, 'Не удалось загрузить кошельки'));
     }
   }
 
@@ -36,7 +37,7 @@ export class WalletsService {
       const created = await firstValueFrom(this.api.create(wallet));
       this._wallets.update(list => [created, ...list]);
     } catch (e) {
-      this._error.set('Не удалось создать кошелёк');
+      this._error.set(this.getErrorMessage(e, 'Не удалось создать кошелёк'));
       this._state.set('error');
     }
   }
@@ -56,8 +57,20 @@ export class WalletsService {
       );
 
     } catch (e) {
-      this._error.set('Не удалось архивировать кошелёк');
+      this._error.set(this.getErrorMessage(e, 'Не удалось архивировать кошелёк'));
       this._state.set('error');
     }
+  }
+
+
+  private getErrorMessage(error: unknown, fallback: string): string {
+    if (error instanceof HttpErrorResponse) {
+      const message = error.error?.message;
+      if (typeof message === 'string' && message.trim()) {
+        return message;
+      }
+    }
+
+    return fallback;
   }
 }

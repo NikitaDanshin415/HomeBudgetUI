@@ -1,75 +1,86 @@
-<h1>Кошельки</h1>
-
-<form class="form" [formGroup]="form" (ngSubmit)="add()">
-  <div class="field">
-    <label class="label" for="name">Название</label>
-    <input id="name" class="input" type="text" formControlName="name" placeholder="Например: Карта" />
-    @if (form.controls.name.touched && form.controls.name.invalid) {
-      <div class="error">Введите название (минимум 2 символа)</div>
-    }
-  </div>
-
-  <div class="field">
-    <label class="label" for="currency">Баланс</label>
-    <input id="balance" class="input" type="number" formControlName="balance" placeholder="0" />
-    @if (form.controls.balance.touched && form.controls.balance.invalid) {
-      <div class="error">Введите баланс больше 0</div>
-    }
-  </div>
-
-  <div class="field">
-    <label class="label" for="currency">Валюта</label>
-    <select id="currency" class="input" formControlName="currency">
-      <option value="RUB">RUB</option>
-      <option value="USD">USD</option>
-      <option value="EUR">EUR</option>
-    </select>
-  </div>
-
-  <button class="add-btn" type="submit">+ Добавить</button>
-</form>
-
-@if (state() === 'loading') {
-  <p>Загрузка...</p>
-}
-
-@if (error()) {
-  <p class="api-error">{{ error() }}</p>
-}
-
-@if (state() === 'ready') {
-  <div class="section">
-    <h2>Активные</h2>
-    <div class="wallets">
-      @for (wallet of activeWallets(); track wallet.id) {
-        <div class="wallet">
-          <div class="name">{{ wallet.name }}</div>
-          <div class="balance">{{ wallet.balance }} {{ wallet.currency }}</div>
-          <div class="actions">
-            <button class="archive-btn" type="button" (click)="archive(wallet.id)">
-              Архивировать
-            </button>
-          </div>
-        </div>
-      }
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Архив</h2>
-    <div class="wallets">
-      @for (wallet of archivedWallets(); track wallet.id) {
-        <div class="wallet">
-          <div class="name">{{ wallet.name }}</div>
-          <div class="balance">{{ wallet.balance }} {{ wallet.currency }}</div>
-          <div class="actions">
-            <button class="archive-btn" type="button" (click)="archive(wallet.id)">
-              Вернуть
-            </button>
-          </div>
-        </div>
-      }
+<section class="page-grid">
+  <h1>Кошельки</h1>
+  <form class="form" [formGroup]="form" (ngSubmit)="add()">
+    <div class="field">
+      <label class="label" for="name">Название</label>
+      <input id="name" class="input" type="text" formControlName="name" placeholder="Например: Карта"/>
+      <div class="error-slot">
+        @if (form.controls.name.touched && form.controls.name.invalid) {
+          <div class="error">Введите название (минимум 2 символа)</div>
+        }
+      </div>
     </div>
 
-  </div>
-}
+    <div class="field">
+      <label class="label" for="currency">Баланс</label>
+      <input id="balance" class="input" type="number" formControlName="balance" placeholder="0"/>
+      <div class="error-slot">
+        @if (form.controls.balance.touched && form.controls.balance.invalid) {
+          <div class="error">Введите баланс больше 0</div>
+        }
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label" for="currency">Валюта</label>
+      <select id="currency" class="input" formControlName="currency">
+        <option value="RUB">RUB</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+      </select>
+    </div>
+
+    <button class="add-btn" type="submit">+ Добавить</button>
+    <!--    <div class="field">-->
+    <!--      @if (form.controls.name.touched && form.controls.name.invalid) {-->
+    <!--        <div class="error">Введите название (минимум 2 символа)</div>-->
+    <!--      }-->
+    <!--      @if (form.controls.balance.touched && form.controls.balance.invalid) {-->
+    <!--        <div class="error">Введите баланс больше 0</div>-->
+    <!--      }-->
+    <!--    </div>-->
+  </form>
+
+  @if (state() === 'loading') {
+    <p>Загрузка...</p>
+  }
+
+  @if (error()) {
+    <p class="api-error">{{ error() }}</p>
+  }
+  @if (state() != 'loading') {
+    <div class="section">
+      <h2>Активные</h2>
+      <div class="wallets">
+        @for (wallet of activeWallets(); track wallet.id) {
+          <div class="wallet">
+            <div class="name">{{ wallet.name }}</div>
+            <div class="balance">{{ wallet.balance }} {{ wallet.currency }}</div>
+            <div class="actions">
+              <button class="archive-btn" type="button" (click)="archive(wallet.id)">
+                Архивировать
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+
+    </div>
+    <div class="section">
+      <h2>Архив</h2>
+      <div class="wallets">
+        @for (wallet of archivedWallets(); track wallet.id) {
+          <div class="wallet">
+            <div class="name">{{ wallet.name }}</div>
+            <div class="balance">{{ wallet.balance }} {{ wallet.currency }}</div>
+            <div class="actions">
+              <button class="archive-btn" type="button" (click)="archive(wallet.id)">
+                Вернуть
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</section>
