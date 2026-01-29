@@ -1,0 +1,8 @@
+export interface Income {
+  id: number;
+  amount: number;
+  walletId: number;
+  incomeCategoryId: number;
+  description: string;
+  incomeDate: string;
+}

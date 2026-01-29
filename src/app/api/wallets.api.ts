@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Wallet } from '../models/wallet.model';
 
+//Отправляем модель Wallet, но исключаем указанные поля из модели
 export type CreateWalletRequest = Omit<Wallet, 'id' | 'archived'>;
 
 @Injectable({ providedIn: 'root' })

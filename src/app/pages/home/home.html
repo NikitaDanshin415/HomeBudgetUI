@@ -1,4 +1,143 @@
 <section class="page-grid">
-  <h1>Главная</h1>
-  <p>Это стартовый экран HomeBudget.</p>
+
+
+  <p class="error-message" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+  <div class="tables-grid">
+    <section class="card">
+      <div class="table-header">
+        <h2>Доходы</h2>
+        <span class="table-count">Всего: {{ incomes().length }}</span>
+      </div>
+      <table>
+        <thead>
+        <tr>
+          <th>Дата</th>
+          <th>Категория</th>
+          <th>Кошелек</th>
+          <th>Сумма</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="entry-row">
+          <td>
+            <input type="date" [(ngModel)]="incomeDate" name="incomeDate" required />
+          </td>
+          <td>
+            <select [(ngModel)]="incomeCategoryId" name="incomeCategoryId" required>
+              <option [ngValue]="null" disabled>Выберите категорию</option>
+              <option *ngFor="let category of activeIncomeCategories()" [ngValue]="category.id">
+                {{ category.name }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <select [(ngModel)]="incomeWalletId" name="incomeWalletId" required>
+              <option [ngValue]="null" disabled>Выберите кошелек</option>
+              <option *ngFor="let wallet of activeWallets()" [ngValue]="wallet.id">
+                {{ wallet.name }}
+              </option>
+            </select>
+          </td>
+
+          <td>
+            <div class="amount-cell">
+              <input
+                type="number"
+                min="0"
+                [(ngModel)]="incomeAmount"
+                name="incomeAmount"
+                placeholder="50000"
+                required
+              />
+              <button type="button" (click)="addIncome()">+</button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngFor="let income of incomes()">
+          <td>{{ income.incomeDate }}</td>
+          <td>{{ getIncomeCategoryName(income.incomeCategoryId) }}</td>
+          <td>{{ getWalletName(income.walletId) }}</td>
+          <td>{{ income.amount | number : '1.0-2' }}</td>
+        </tr>
+        <tr *ngIf="!incomes().length">
+          <td colspan="5" class="empty-state">Доходы пока не добавлены.</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <div class="table-header">
+        <h2>Расходы</h2>
+        <span class="table-count">Всего: {{ expenses().length }}</span>
+      </div>
+      <table>
+        <thead>
+        <tr>
+          <th>Дата</th>
+          <th>Категория</th>
+          <th>Кошелек</th>
+          <th>Описание</th>
+          <th>Сумма</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="entry-row">
+          <td>
+            <input type="date" [(ngModel)]="expenseDate" name="expenseDate" required />
+          </td>
+          <td>
+            <select [(ngModel)]="expenseCategoryId" name="expenseCategoryId" required>
+              <option [ngValue]="null" disabled>Выберите категорию</option>
+              <option *ngFor="let category of activeSpendCategories()" [ngValue]="category.id">
+                {{ category.name }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <select [(ngModel)]="expenseWalletId" name="expenseWalletId" required>
+              <option [ngValue]="null" disabled>Выберите кошелек</option>
+              <option *ngFor="let wallet of activeWallets()" [ngValue]="wallet.id">
+                {{ wallet.name }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <input
+              type="text"
+              [(ngModel)]="expenseDescription"
+              name="expenseDescription"
+              placeholder="Продукты"
+              required
+            />
+          </td>
+          <td>
+            <div class="amount-cell">
+              <input
+                type="number"
+                min="0"
+                [(ngModel)]="expenseAmount"
+                name="expenseAmount"
+                placeholder="3500"
+                required
+              />
+              <button type="button" (click)="addExpense()">+</button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngFor="let expense of expenses()">
+          <td>{{ expense.date }}</td>
+          <td>{{ getSpendCategoryName(expense.spendCategoryId) }}</td>
+          <td>{{ getWalletName(expense.walletId) }}</td>
+          <td>{{ expense.description }}</td>
+          <td>{{ expense.amount | number : '1.0-2' }}</td>
+        </tr>
+        <tr *ngIf="!expenses().length">
+          <td colspan="5" class="empty-state">Расходы пока не добавлены.</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
 </section>
