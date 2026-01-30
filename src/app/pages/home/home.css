@@ -84,6 +84,34 @@ th {
   background: #ffffff;
 }
 
+.month-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.month-switcher button {
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #374151;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.month-switcher button:hover {
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+.month-label {
+  font-weight: 600;
+  color: #111827;
+}
+
+
 .amount-cell {
   display: flex;
   gap: 8px;

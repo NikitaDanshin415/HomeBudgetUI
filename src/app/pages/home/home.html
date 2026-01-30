@@ -3,6 +3,14 @@
 
   <p class="error-message" *ngIf="errorMessage()">{{ errorMessage() }}</p>
 
+  <div class="month-switcher">
+    <button type="button" (click)="changeMonth(-1)" aria-label="Предыдущий месяц">‹</button>
+    <span class="month-label">Текущий месяц: {{ monthLabel }}</span>
+    <button type="button" (click)="changeMonth(1)" aria-label="Следующий месяц">›</button>
+  </div>
+
+
+
   <div class="tables-grid">
     <section class="card">
       <div class="table-header">

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Income } from '../models/income.model';
 
@@ -11,8 +11,9 @@ export class IncomeApi {
 
   constructor(private readonly http: HttpClient) {}
 
-  getAll(): Observable<Income[]> {
-    return this.http.get<Income[]>(this.incomeUrl);
+  getAll(year: number, month: number): Observable<Income[]> {
+    const params = new HttpParams({ fromObject: { year: String(year), month: String(month) } });
+    return this.http.get<Income[]>(this.incomeUrl, { params });
   }
 
   create(request: CreateIncomeRequest): Observable<Income> {

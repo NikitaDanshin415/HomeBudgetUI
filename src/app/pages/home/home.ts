@@ -18,6 +18,22 @@ export class Home implements OnInit {
   private readonly walletsService = inject(WalletsService);
   private readonly spendService = inject(SpendService);
   private readonly incomeService = inject(IncomeService);
+  readonly monthNames = [
+    'Январь',
+    'Февраль',
+    'Март',
+    'Апрель',
+    'Май',
+    'Июнь',
+    'Июль',
+    'Август',
+    'Сентябрь',
+    'Октябрь',
+    'Ноябрь',
+    'Декабрь',
+  ];
+  selectedMonthIndex = new Date().getMonth();
+  selectedYear = new Date().getFullYear();
   incomeAmount: number | null = null;
   incomeDate = '';
   incomeCategoryId: number | null = null;
@@ -49,15 +65,25 @@ export class Home implements OnInit {
       this.spendService.error()
   );
 
+  get monthLabel(): string {
+    return `${this.monthNames[this.selectedMonthIndex]} ${this.selectedYear}`;
+  }
+
   async ngOnInit(): Promise<void> {
     await Promise.all([
       this.categoriesService.load(),
       this.walletsService.load(),
-      this.incomeService.load(),
-      this.spendService.load(),
+      this.loadEntries(),
     ]);
 
     this.ensureDefaults();
+  }
+
+  async changeMonth(delta: number): Promise<void> {
+    const nextDate = new Date(this.selectedYear, this.selectedMonthIndex + delta, 1);
+    this.selectedYear = nextDate.getFullYear();
+    this.selectedMonthIndex = nextDate.getMonth();
+    await this.loadEntries();
   }
 
   async addIncome(): Promise<void> {
@@ -136,5 +162,11 @@ export class Home implements OnInit {
         this.expenseWalletId = wallet.id;
       }
     }
+  }
+
+  private async loadEntries(): Promise<void> {
+    const month = this.selectedMonthIndex + 1;
+    const year = this.selectedYear;
+    await Promise.all([this.incomeService.load(year, month), this.spendService.load(year, month)]);
   }
 }

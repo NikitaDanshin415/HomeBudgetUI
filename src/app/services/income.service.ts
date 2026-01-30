@@ -18,12 +18,12 @@ export class IncomeService {
 
   constructor(private readonly api: IncomeApi) {}
 
-  async load(): Promise<void> {
+  async load(year: number, month: number): Promise<void> {
     this._state.set('loading');
     this._error.set(null);
 
     try {
-      const incomes = await firstValueFrom(this.api.getAll());
+      const incomes = await firstValueFrom(this.api.getAll(year, month));
       this._incomes.set(incomes);
       this._state.set('ready');
     } catch (e) {

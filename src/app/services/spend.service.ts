@@ -18,12 +18,12 @@ export class SpendService {
 
   constructor(private readonly api: SpendApi) {}
 
-  async load(): Promise<void> {
+  async load(year: number, month: number): Promise<void> {
     this._state.set('loading');
     this._error.set(null);
 
     try {
-      const spends = await firstValueFrom(this.api.getAll());
+      const spends = await firstValueFrom(this.api.getAll(year, month));
       this._spends.set(spends);
       this._state.set('ready');
     } catch (e) {
