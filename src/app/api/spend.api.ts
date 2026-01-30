@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { Spend } from '../models/spend.model';
 
 export type CreateSpendRequest = Omit<Spend, 'id'>;
-export type RemoveSpendRequest = Omit<Spend, 'id'>;
 
 @Injectable({ providedIn: 'root' })
 export class SpendApi {
@@ -19,5 +18,9 @@ export class SpendApi {
 
   create(request: CreateSpendRequest): Observable<Spend> {
     return this.http.post<Spend>(this.spendUrl, request);
+  }
+
+  remove(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.spendUrl}/${id}`);
   }
 }

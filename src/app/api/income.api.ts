@@ -19,4 +19,8 @@ export class IncomeApi {
   create(request: CreateIncomeRequest): Observable<Income> {
     return this.http.post<Income>(this.incomeUrl, request);
   }
+
+  remove(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.incomeUrl}/${id}`);
+  }
 }

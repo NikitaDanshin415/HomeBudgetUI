@@ -1,6 +1,4 @@
 <section class="page-grid">
-
-
   <p class="error-message" *ngIf="errorMessage()">{{ errorMessage() }}</p>
 
   <div class="month-switcher">
@@ -23,6 +21,7 @@
           <th>Кошелек</th>
           <th>Описание</th>
           <th>Сумма</th>
+          <th>Действия</th>
         </tr>
         </thead>
         <tbody>
@@ -65,8 +64,11 @@
                 placeholder="3500"
                 required
               />
-              <button type="button" (click)="addExpense()">+</button>
+
             </div>
+          </td>
+          <td>
+            <button type="button" (click)="addExpense()">+</button>
           </td>
         </tr>
         <tr *ngFor="let expense of expenses()">
@@ -75,9 +77,14 @@
           <td>{{ getWalletName(expense.walletId) }}</td>
           <td>{{ expense.description }}</td>
           <td>{{ expense.amount | number : '1.0-2' }}</td>
+          <td>
+            <button type="button" class="delete-button" (click)="deleteExpense(expense.id)">
+              X
+            </button>
+          </td>
         </tr>
         <tr *ngIf="!expenses().length">
-          <td colspan="5" class="empty-state">Расходы пока не добавлены.</td>
+          <td colspan="6" class="empty-state">Расходы пока не добавлены.</td>
         </tr>
         </tbody>
       </table>
@@ -96,6 +103,7 @@
           <th>Категория</th>
           <th>Кошелек</th>
           <th>Сумма</th>
+          <th>Действия</th>
         </tr>
         </thead>
         <tbody>
@@ -130,8 +138,10 @@
                 placeholder="50000"
                 required
               />
-              <button type="button" (click)="addIncome()">+</button>
             </div>
+          </td>
+          <td>
+            <button type="button" (click)="addIncome()">+</button>
           </td>
         </tr>
         <tr *ngFor="let income of incomes()">
@@ -139,6 +149,11 @@
           <td>{{ getIncomeCategoryName(income.incomeCategoryId) }}</td>
           <td>{{ getWalletName(income.walletId) }}</td>
           <td>{{ income.amount | number : '1.0-2' }}</td>
+          <td>
+            <button type="button" class="delete-button" (click)="deleteIncome(income.id)">
+              X
+            </button>
+          </td>
         </tr>
         <tr *ngIf="!incomes().length">
           <td colspan="5" class="empty-state">Доходы пока не добавлены.</td>

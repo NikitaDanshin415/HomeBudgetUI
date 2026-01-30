@@ -111,6 +111,19 @@ th {
   color: #111827;
 }
 
+.delete-button {
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background: #fecaca;
+}
 
 .amount-cell {
   display: flex;

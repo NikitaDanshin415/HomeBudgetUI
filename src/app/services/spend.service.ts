@@ -32,6 +32,18 @@ export class SpendService {
     }
   }
 
+  async remove(id: number): Promise<void> {
+    this._error.set(null);
+
+    try {
+      await firstValueFrom(this.api.remove(id));
+      this._spends.update(list => list.filter(item => item.id !== id));
+    } catch (e) {
+      this._state.set('error');
+      this._error.set(this.getErrorMessage(e, 'Не удалось удалить расход'));
+    }
+  }
+
   async add(request: CreateSpendRequest): Promise<void> {
     this._error.set(null);
 

@@ -133,6 +133,14 @@ export class Home implements OnInit {
     this.expenseDate = '';
   }
 
+  async deleteIncome(id: number): Promise<void> {
+    await this.incomeService.remove(id);
+  }
+
+  async deleteExpense(id: number): Promise<void> {
+    await this.spendService.remove(id);
+  }
+
   getIncomeCategoryName(id: number): string {
     return this.incomeCategories().find(category => category.id === id)?.name ?? '—';
   }

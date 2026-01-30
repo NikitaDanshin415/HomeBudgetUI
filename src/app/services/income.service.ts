@@ -43,6 +43,17 @@ export class IncomeService {
       this._error.set(this.getErrorMessage(e, 'Не удалось создать доход'));
     }
   }
+  async remove(id: number): Promise<void> {
+    this._error.set(null);
+
+    try {
+      await firstValueFrom(this.api.remove(id));
+      this._incomes.update(list => list.filter(item => item.id !== id));
+    } catch (e) {
+      this._state.set('error');
+      this._error.set(this.getErrorMessage(e, 'Не удалось удалить доход'));
+    }
+  }
 
   private getErrorMessage(error: unknown, fallback: string): string {
     if (error instanceof HttpErrorResponse) {
