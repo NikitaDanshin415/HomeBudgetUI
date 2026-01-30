@@ -5,6 +5,7 @@ import {CategoriesService} from '../../services/categories.service';
 import {WalletsService} from '../../services/wallets.service';
 import {SpendService} from '../../services/spend.service';
 import {IncomeService} from '../../services/income.service';
+import {BalanceService} from '../../services/balance.service';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ export class Home implements OnInit {
   private readonly walletsService = inject(WalletsService);
   private readonly spendService = inject(SpendService);
   private readonly incomeService = inject(IncomeService);
+  private readonly balanceService = inject(BalanceService);
   readonly monthNames = [
     'Январь',
     'Февраль',
@@ -47,6 +49,7 @@ export class Home implements OnInit {
 
   readonly incomes = this.incomeService.incomes;
   readonly expenses = this.spendService.spends;
+  readonly balance = this.balanceService.balance;
   readonly incomeCategories = this.categoriesService.income;
   readonly spendCategories = this.categoriesService.spend;
   readonly wallets = this.walletsService.wallets;
@@ -56,13 +59,20 @@ export class Home implements OnInit {
   readonly activeSpendCategories = computed(() =>
     this.spendCategories().filter(category => !category.archived)
   );
+  readonly totalIncome = computed(() =>
+    this.incomes().reduce((total, income) => total + income.amount, 0)
+  );
+  readonly totalExpense = computed(() =>
+    this.expenses().reduce((total, expense) => total + expense.amount, 0)
+  );
   readonly activeWallets = computed(() => this.wallets().filter(wallet => !wallet.archived));
   readonly errorMessage = computed(
     () =>
       this.categoriesService.error() ??
       this.walletsService.error() ??
       this.incomeService.error() ??
-      this.spendService.error()
+      this.spendService.error() ??
+      this.balanceService.error()
   );
 
   get monthLabel(): string {
@@ -74,6 +84,7 @@ export class Home implements OnInit {
       this.categoriesService.load(),
       this.walletsService.load(),
       this.loadEntries(),
+      this.balanceService.load(),
     ]);
 
     this.ensureDefaults();
@@ -103,6 +114,7 @@ export class Home implements OnInit {
       walletId: this.incomeWalletId,
     });
 
+    await this.refreshBalance();
     this.incomeAmount = null;
     this.incomeDate = '';
   }
@@ -128,6 +140,7 @@ export class Home implements OnInit {
       walletId: this.expenseWalletId,
     });
 
+    await this.refreshBalance();
     this.expenseDescription = '';
     this.expenseAmount = null;
     this.expenseDate = '';
@@ -135,10 +148,12 @@ export class Home implements OnInit {
 
   async deleteIncome(id: number): Promise<void> {
     await this.incomeService.remove(id);
+    await this.refreshBalance();
   }
 
   async deleteExpense(id: number): Promise<void> {
     await this.spendService.remove(id);
+    await this.refreshBalance();
   }
 
   getIncomeCategoryName(id: number): string {
@@ -151,6 +166,16 @@ export class Home implements OnInit {
 
   getWalletName(id: number): string {
     return this.wallets().find(wallet => wallet.id === id)?.name ?? '—';
+  }
+
+  getCurrencySymbol(currency: string | null | undefined): string {
+    if (!currency) {
+      return '₽';
+    }
+    if (currency.toUpperCase() === 'RUB') {
+      return '₽';
+    }
+    return currency.toUpperCase();
   }
 
   private ensureDefaults(): void {
@@ -178,5 +203,9 @@ export class Home implements OnInit {
     const month = this.selectedMonthIndex + 1;
     const year = this.selectedYear;
     await Promise.all([this.incomeService.load(year, month), this.spendService.load(year, month)]);
+  }
+
+  private async refreshBalance(): Promise<void> {
+    await this.balanceService.load();
   }
 }

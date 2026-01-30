@@ -164,3 +164,40 @@ th {
   color: #991b1b;
   font-weight: 600;
 }
+
+.budget-summary {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.budget-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #f9fafb;
+}
+
+.budget-label {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.budget-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.budget-value--positive {
+  color: #16a34a;
+}
+
+.budget-value--negative {
+  color: #dc2626;
+}

@@ -7,6 +7,28 @@
     <button type="button" (click)="changeMonth(1)" aria-label="Следующий месяц">›</button>
   </div>
 
+  <section class="card budget-summary">
+    <div class="budget-item">
+      <span class="budget-label">Сумма расходов</span>
+      <span class="budget-value budget-value--negative">
+        {{ totalExpense() | number : '1.0-2' }} {{ getCurrencySymbol(balance()?.currency) }}
+      </span>
+    </div>
+    <div class="budget-item">
+      <span class="budget-label">Всего денег</span>
+      <span class="budget-value">
+        {{ balance()?.total ?? 0 | number : '1.0-2' }} {{ getCurrencySymbol(balance()?.currency) }}
+      </span>
+    </div>
+    <div class="budget-item">
+      <span class="budget-label">Сумма доходов</span>
+      <span class="budget-value budget-value--positive">
+        {{ totalIncome() | number : '1.0-2' }} {{ getCurrencySymbol(balance()?.currency) }}
+      </span>
+    </div>
+
+  </section>
+
   <div class="tables-grid">
     <section class="card">
       <div class="table-header">
