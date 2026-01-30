@@ -18,7 +18,6 @@ export class Home implements OnInit {
   private readonly walletsService = inject(WalletsService);
   private readonly spendService = inject(SpendService);
   private readonly incomeService = inject(IncomeService);
-  incomeDescription = '';
   incomeAmount: number | null = null;
   incomeDate = '';
   incomeCategoryId: number | null = null;
@@ -63,7 +62,6 @@ export class Home implements OnInit {
 
   async addIncome(): Promise<void> {
     if (
-      !this.incomeDescription ||
       this.incomeAmount === null ||
       !this.incomeDate ||
       this.incomeCategoryId === null ||
@@ -73,14 +71,12 @@ export class Home implements OnInit {
     }
 
     await this.incomeService.add({
-      description: this.incomeDescription,
       amount: this.incomeAmount,
       incomeDate: this.incomeDate,
       incomeCategoryId: this.incomeCategoryId,
       walletId: this.incomeWalletId,
     });
 
-    this.incomeDescription = '';
     this.incomeAmount = null;
     this.incomeDate = '';
   }

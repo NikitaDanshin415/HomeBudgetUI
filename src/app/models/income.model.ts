@@ -3,6 +3,5 @@ export interface Income {
   amount: number;
   walletId: number;
   incomeCategoryId: number;
-  description: string;
   incomeDate: string;
 }
