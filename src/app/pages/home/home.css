@@ -19,7 +19,7 @@
 
 @media (min-width: 900px) {
   .tables-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   }
 }
 
@@ -29,6 +29,14 @@
   background: #ffffff;
   padding: 20px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.spend-table{
+  width: 1000px;
+}
+
+.income-table{
+  width: 600px;
 }
 
 .table-header {
@@ -68,7 +76,7 @@ th {
 
 .entry-row input,
 .entry-row select {
-  width: 100%;
+  width: 90%;
   border-radius: 8px;
   border: 1px solid #d1d5db;
   padding: 8px 10px;
